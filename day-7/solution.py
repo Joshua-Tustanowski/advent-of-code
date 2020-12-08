@@ -85,8 +85,8 @@ if __name__ == "__main__":
     bag_names, bag_contents = read_and_parse_input_file('input.txt')
     graph = build_graph(bag_names, bag_contents)
     # ------------ part 1 ------------
-    # print(search_all_start_nodes(graph, target_colour='shiny gold', count=0))
+    print(search_all_start_nodes(graph, target_colour='shiny gold', count=0))
 
     # ------------ part 2 ------------
     stack = [(1, "shiny gold")]
-    # print(dfs(graph, stack))
+    print(dfs(graph, stack))
