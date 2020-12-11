@@ -18,8 +18,7 @@ def get_leaderboard_data(url: str) -> dict:
     print(soup.prettify())
 
 
-def parse_leaderboard(data):
-    data = json.loads(data)
+def parse_leaderboard(data: dict):
     parsed_data = {}
     for a in data['members']:
         results = data['members'][a]
@@ -32,12 +31,12 @@ def parse_leaderboard(data):
                 times.append(convert_unix_to_datetime(int(time['get_star_ts'])))
             element[day] = times
             parsed_data[results['name']].append(element)
-    print(parsed_data)
+    return parsed_data
 
 
 if __name__ == "__main__":
-    pass
-    # formatted_leaderboard = parse_leaderboard(data)
-    # formatted_json = json.dumps(formatted_leaderboard)
-    # with open('formatted_leadboard.json', 'w') as output:
-    #     output.write(formatted_json)
+    data = json.load(open('leaderboard.json', 'r'))
+    formatted_leaderboard = parse_leaderboard(data)
+    formatted_json = json.dumps(formatted_leaderboard)
+    with open('formatted_leadboard.json', 'w') as output:
+        output.write(formatted_json)
