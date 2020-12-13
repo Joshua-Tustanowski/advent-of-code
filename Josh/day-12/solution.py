@@ -58,10 +58,8 @@ def part_one(actions):
         elif action == 'W':
             x = x - value
         elif action == 'F':
-            x_off, y_off = direction
-            for _ in range(value):
-                x += x_off
-                y += y_off
+            x = x + value * direction[0]
+            y = y + value * direction[1]
         position = (x, y)
     return manhattan_dist(position)
 
