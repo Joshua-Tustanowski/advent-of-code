@@ -12,4 +12,4 @@ for x in data:
     counter[x+2] += counter[x]
     counter[x+3] += counter[x]
 
-print(counter[max(data) + 3])
+print(counter[max(data) + 3])  # ans: 1727094849536
