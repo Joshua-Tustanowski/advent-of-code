@@ -25,7 +25,7 @@ def solve_two(input):
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # this code is crap check out itertools combinations for pythonic glory
     file = Path('data.txt')
     data = [int(x) for x in file.open('r')]
     print(solve(data))
