@@ -1,4 +1,3 @@
-*.txt
 .idea/
 !.gitignore
 .DS_Store
