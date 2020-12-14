@@ -1,5 +1,4 @@
-from typing import List, Tuple
-import re
+from typing import List
 
 
 def part1(inp: List[int]) -> int:
@@ -12,7 +11,7 @@ def part1(inp: List[int]) -> int:
         assert diff in (1, 3), f'Unexpected diff for pair ({adapter1}, {adapter2}). i={i}'
         if diff == 1:
             no_of_1_jolt_diffs += 1
-        elif diff == 3:
+        else:
             no_of_3_jolt_diffs += 1
     return no_of_1_jolt_diffs * no_of_3_jolt_diffs
 
@@ -34,41 +33,56 @@ def test_part1():
     assert part1(inp) == 1904
 
 
-def find_all_paths(inp: List[int], path=None) -> List[List[int]]:
-    if path is None:
-        path = []
-    path = path + [inp[0]]
-    if len(inp) == 1:
-        return [path]
-
-    paths = []
-    for i in range(len(inp)):
-        a = inp[i]
-        print(f'i={i}, inp={inp}')
-        possible_next_joltage_indices = [j for j in range(i+1, min(i+4, len(inp))) if 1 <= inp[j] - a <= 3]
-        # ps = []
-        for j in possible_next_joltage_indices:
-            onward_paths = find_all_paths(inp[j:], path)
-            for path in onward_paths:
-                paths.append(path)
-        # paths.extend(ps)
-    return paths
-
-
 def part2(inp: List[int]) -> int:
+    """ Iterate through list, incrementing a same-size counter list which is tracking how many ways you can get to any
+     specific number. By the end, we have the total number of ways to get to the end"""
+    inp = [0] + inp
     inp = sorted(inp)
-    paths = find_all_paths(inp)
-    import pdb; pdb.set_trace()
-    return len(paths)
+    size = len(inp)
+    counts = [1] + [0 for _ in range(size - 1)]
+    for n, num in enumerate(inp):
+        indices_of_possible_next_nums = [i for i in range(n+1, min(n+4, size)) if 1 <= inp[i] - num <= 3]
+        for j in indices_of_possible_next_nums:
+            counts[j] += counts[n]
+
+    return counts[-1]
 
 
 def test_part2():
     print()
+    """
+    0 3 4 5
+    0 3 5
+    1 3 4 5
+    1 3 5
+    1 4 5
+    """
+    inp1 = load_input_file('sample4.txt')
+    assert part2(inp1) == 5
+
+    """
+    0 3 4 5 7 8
+    0 3 4 5 8
+    0 3 4 7 8
+    0 3 5 7 8
+    0 3 5 8
+    0 1 3 4 5 7 8 -
+    0 1 3 4 5 8 -
+    0 1 3 4 7 8 -
+    0 1 3 5 7 8 -
+    0 1 3 5 8 -
+    0 1 4 5 7 8
+    0 1 4 7 8
+    0 1 4 5 8
+    """
+    inp1 = load_input_file('sample3.txt')
+    assert part2(inp1) == 13
+
     inp1 = load_input_file('sample.txt')
     assert part2(inp1) == 8
 
     inp1 = load_input_file('sample2.txt')
     assert part2(inp1) == 19208
-
+    #
     inp = load_input_file('input.txt')
-    assert part2(inp) == None
+    assert part2(inp) == 10578455953408
