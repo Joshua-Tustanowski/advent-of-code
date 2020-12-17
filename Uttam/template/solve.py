@@ -2,7 +2,7 @@ from typing import List, Tuple
 import re
 
 
-def part1(inp: str) -> int:
+def part1(inp: List[str]) -> int:
     pass
 
 
