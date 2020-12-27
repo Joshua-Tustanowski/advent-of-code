@@ -1,28 +1,22 @@
 default_language_version:
   python: python3.7
 repos:
+  - repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+      - id: black
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
+    hooks:
+      - id: flake8
   - repo: git://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
-    exclude: >
-      (?x) (
-        | \/python_client\/
-      )
     hooks:
       - id: trailing-whitespace
         language_version: python3
-        exclude: >
-          (?x)(
-              \/nginx\/
-              | \/scripts\/
-              | \/setup\/
-              | \/sslcerts\/
-              | \/.gitignore\/
-              | \/setup.cfg\/
-          )
       - id: check-json
         language_version: python3
         types: ["json"]
-
   - repo: https://github.com/prettier/prettier
     rev: "2.1.1"
     hooks:
