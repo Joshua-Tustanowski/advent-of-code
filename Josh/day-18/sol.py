@@ -1,42 +1,62 @@
-def evaluate_expr(stack):
-    res = stack.pop() if stack else 0
-    while stack and stack[-1] != ")":
-        sign = stack.pop()
-        if sign == "+":
-            res += stack.pop()
-        else:
-            res *= stack.pop()
-    return res
+mult = lambda x, y: x * y
+addr = lambda x, y: x + y
 
 
-def calculate(s: str) -> int:
-    stack = []
-    n, operand = 0, 0
-    for i in range(len(s) - 1, -1, -1):
-        ch = s[i]
-        if ch.isdigit():
-            operand = (10 ** n * int(ch)) + operand
-            n += 1
-        elif ch != " ":
-            if n:
-                stack.append(operand)
-                n, operand = 0, 0
+def part_two(data):
+    def evaluate(stack):
+        ans = 1
+        op = mult
+        while stack:
+            ch = stack.pop()
+            if ch == ")":
+                return ans
             if ch == "(":
-                res = evaluate_expr(stack)
-                stack.pop()
-                stack.append(res)
+                ans = op(ans, evaluate(stack))
+            elif ch == "+":
+                op = addr
+            elif ch == "*":
+                ans = mult(ans, evaluate(stack))
+                return ans
             else:
-                stack.append(ch)
-    if n:
-        stack.append(operand)
-    return evaluate_expr(stack)
+                ans = op(ans, int(ch))
+        return ans
+
+    ans = 0
+    for line in data.split("\n"):
+        stack = list(reversed(line.replace(" ", "")))
+        ans += evaluate(stack)
+
+    print(ans)
+
+
+def part_one(data):
+    def evaluate(stack):
+        ans = 1
+        op = mult
+        while stack:
+            ch = stack.pop()
+            if ch == ")":
+                return ans
+            if ch == "(":
+                ans = op(ans, evaluate(stack))
+            elif ch == "+":
+                op = addr
+            elif ch == "*":
+                op = mult
+            else:
+                ans = op(ans, int(ch))
+        return ans
+
+    ans = 0
+    for line in data.split("\n"):
+        stack = list(reversed(line.replace(" ", "")))
+        ans += evaluate(stack)
+
+    print(ans)
 
 
 if __name__ == "__main__":
     with open("input.txt", "r") as fp:
-        contents = fp.readlines()
-    for i, content in enumerate(contents):
-        contents[i] = content.replace("\n", "")
-    counter = 0
-    for content in contents:
-        counter += calculate(content)
+        contents = fp.read()
+    part_one(contents)
+    part_two(contents)
