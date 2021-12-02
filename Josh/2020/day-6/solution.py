@@ -5,17 +5,19 @@ def get_customs_sum(custom):
             count[char] = 1
     return len(count)
 
+
 def solution(file):
-    with open(file, 'r') as file:
+    with open(file, "r") as file:
         input_data = file.read().split("\n\n")
         sum_ = 0
         for input_ in input_data:
             sum_ += get_everyone_sum(input_)
         print(sum_)
 
+
 def get_everyone_sum(input_data):
-    input_data = input_data.replace('\n', ' ')
-    input_data = input_data.split(' ')
+    input_data = input_data.replace("\n", " ")
+    input_data = input_data.split(" ")
     count = {}
     for person in input_data:
         for char in person:
@@ -29,5 +31,6 @@ def get_everyone_sum(input_data):
             matching += 1
     return matching
 
+
 if __name__ == "__main__":
-    solution('input.txt')
+    solution("input.txt")

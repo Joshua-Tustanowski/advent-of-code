@@ -2,13 +2,13 @@ import re
 
 
 def read_and_parse_file(filename: str):
-    with open(filename, 'r') as fp:
+    with open(filename, "r") as fp:
         cnts = fp.read().splitlines()
-    mask_rgx = re.compile(r'(mask)\s=\s([10X]+)')
-    mem_rgx = re.compile(r'^mem\[(\d+)\]\s=\s(\d+)')
+    mask_rgx = re.compile(r"(mask)\s=\s([10X]+)")
+    mem_rgx = re.compile(r"^mem\[(\d+)\]\s=\s(\d+)")
     results = {}
     for res in cnts:
-        if res[:4] == 'mask':
+        if res[:4] == "mask":
             mask = mask_rgx.match(res)
             bitmask = mask.group(2)
             results[bitmask] = []
@@ -29,7 +29,7 @@ def b2d(bin: str):
 
 
 if __name__ == "__main__":
-    results = read_and_parse_file('input.txt')
+    results = read_and_parse_file("input.txt")
     values = {}
     # print(results)
     for mask, addresses in results.items():
@@ -40,7 +40,7 @@ if __name__ == "__main__":
             binary = f"{(36-len(binary)) * '0'}{binary}"
             binary = [char for char in binary]
             for i in range(len(binary)):
-                if mask[i] != 'X':
+                if mask[i] != "X":
                     binary[i] = mask[i]
             # print("".join(binary))
             values[int(_address)] = b2d(binary)

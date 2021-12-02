@@ -3,14 +3,14 @@ from typing import List
 
 
 def read_and_parse_input_file(file_name: str) -> str:
-    with open(file_name, 'r') as file:
+    with open(file_name, "r") as file:
         contents = file.read()
         contents = contents.split("\n")
 
     # parse using regular expressions
-    holding_bag_regex = re.compile(r'^(\w+\s\w+)')
-    bag_content_regex = re.compile(r'(\d\s\w+\s\w+)')
-    bag_names, bag_contents  = [], []
+    holding_bag_regex = re.compile(r"^(\w+\s\w+)")
+    bag_content_regex = re.compile(r"(\d\s\w+\s\w+)")
+    bag_names, bag_contents = [], []
     for data in contents:
         bag_names.append(holding_bag_regex.match(data).group(0))
         bag_contents.append(bag_content_regex.findall(data))
@@ -25,7 +25,7 @@ def build_graph(bag_names: List[str], bag_contents: List[str]) -> dict:
         for content in bag_contents[i]:
             if len(content):
                 number, first, last = content.split(" ")
-                content = (int(number), f'{first} {last}')
+                content = (int(number), f"{first} {last}")
             else:
                 content = []
             graph[bag].append(content)
@@ -62,14 +62,17 @@ def search_all_start_nodes(graph, target_colour, count):
     for start_colour in graph.keys():
         queue, visited = [], []
         print(f"Bag colour: {start_colour}", end="\n")
-        if len(graph[start_colour]) and start_colour != target_colour and traverse_graph(
-            graph, start_colour, target_colour, visited, queue):
+        if (
+            len(graph[start_colour])
+            and start_colour != target_colour
+            and traverse_graph(graph, start_colour, target_colour, visited, queue)
+        ):
             count += 1
         print("\n")
     return count
 
 
-def dfs(graph, stack, counter = 0):
+def dfs(graph, stack, counter=0):
     while len(stack):
         amount, colour = stack.pop()
         counter += amount
@@ -77,15 +80,15 @@ def dfs(graph, stack, counter = 0):
         if colour in graph:
             children = graph[colour]
             for number, child in children:
-                stack.append((number*amount, child))
+                stack.append((number * amount, child))
     return counter - 1
 
 
 if __name__ == "__main__":
-    bag_names, bag_contents = read_and_parse_input_file('input.txt')
+    bag_names, bag_contents = read_and_parse_input_file("input.txt")
     graph = build_graph(bag_names, bag_contents)
     # ------------ part 1 ------------
-    print(search_all_start_nodes(graph, target_colour='shiny gold', count=0))
+    print(search_all_start_nodes(graph, target_colour="shiny gold", count=0))
 
     # ------------ part 2 ------------
     stack = [(1, "shiny gold")]

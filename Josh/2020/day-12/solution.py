@@ -1,18 +1,18 @@
 import re
 
 directions = {
-    'E': (+1, 0),
-    'W': (-1, 0),
-    'N': (0, +1),
-    'S': (0, -1),
+    "E": (+1, 0),
+    "W": (-1, 0),
+    "N": (0, +1),
+    "S": (0, -1),
 }
 
 
 def read_and_parse_input(filename: str):
-    with open(filename, 'r') as fp:
+    with open(filename, "r") as fp:
         res = fp.read()
-        contents = res.split('\n')
-    regex = re.compile(r'([A-Z])(\d+)')
+        contents = res.split("\n")
+    regex = re.compile(r"([A-Z])(\d+)")
     output = []
     for action in contents:
         match = regex.match(action)
@@ -21,15 +21,15 @@ def read_and_parse_input(filename: str):
 
 
 def handle_turn(direction, action, value):
-    directions = {(0,1): 'N', (1,0): 'E', (0,-1): 'S', (-1, 0): 'W'}
-    direction_strs = ['N', 'E', 'S', 'W']
+    directions = {(0, 1): "N", (1, 0): "E", (0, -1): "S", (-1, 0): "W"}
+    direction_strs = ["N", "E", "S", "W"]
     direction_str = directions[direction]
     idx = direction_strs.index(direction_str)
     counter = value // 90
-    if action == 'R':
+    if action == "R":
         for i in range(counter):
             idx = (idx + 1) % 4
-    if action == 'L':
+    if action == "L":
         for i in range(counter):
             idx = (idx - 1) % 4
     for _direction, direction_str in directions.items():
@@ -47,17 +47,17 @@ def part_one(actions):
     position = (0, 0)
     for action, value in actions:
         x, y = position
-        if action == 'R' or action == 'L':
+        if action == "R" or action == "L":
             direction = handle_turn(direction, action, value)
-        elif action == 'N':
+        elif action == "N":
             y = y + value
-        elif action == 'S':
+        elif action == "S":
             y = y - value
-        elif action == 'E':
+        elif action == "E":
             x = x + value
-        elif action == 'W':
+        elif action == "W":
             x = x - value
-        elif action == 'F':
+        elif action == "F":
             x = x + value * direction[0]
             y = y + value * direction[1]
         position = (x, y)
@@ -85,7 +85,7 @@ def part_two(actions):
     waypoint = (+10, +1)
 
     for action, value in actions:
-        if action == 'F':
+        if action == "F":
             coord = (
                 coord[0] + waypoint[0] * value,
                 coord[1] + waypoint[1] * value,
@@ -95,15 +95,15 @@ def part_two(actions):
                 waypoint[0] + directions[action][0] * value,
                 waypoint[1] + directions[action][1] * value,
             )
-        elif action == 'L':
+        elif action == "L":
             waypoint = left_rotation(waypoint, value)
-        elif action == 'R':
+        elif action == "R":
             waypoint = right_rotation(waypoint, value)
 
     return manhattan_dist(coord)
 
 
 if __name__ == "__main__":
-    actions = read_and_parse_input('input.txt')
+    actions = read_and_parse_input("input.txt")
     print(part_one(actions))
     print(part_two(actions))

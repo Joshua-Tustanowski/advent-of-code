@@ -2,9 +2,9 @@ from typing import List
 
 
 def read_and_parse_input(file_name: str) -> list:
-    with open(file_name, 'r') as _input:
+    with open(file_name, "r") as _input:
         _input = _input.read()
-        _input = _input.split('\n')
+        _input = _input.split("\n")
     for i in range(len(_input)):
         _input[i] = int(_input[i])
     return _input
@@ -43,7 +43,7 @@ def combinations(joltages: List[int]) -> int:
 
 
 if __name__ == "__main__":
-    values = form_joltages('input.txt')
+    values = form_joltages("input.txt")
     # ------- part 1 ------- #
     res = part_one(values)
     assert res == 2312

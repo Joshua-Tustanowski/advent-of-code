@@ -1,7 +1,7 @@
 def open_and_parse_input(file_name):
     # [(op, value, seen), ...]
     output = []
-    with open(file_name, 'r') as file:
+    with open(file_name, "r") as file:
         contents = file.read()
         contents = contents.split("\n")
         for content in contents:
@@ -19,10 +19,10 @@ def main(file_name):
         operation, number, seen = operations[i]
         if seen:
             break
-        if operation == 'acc':
+        if operation == "acc":
             accumulator += number
         operations[i] = (operation, number, True)
-        if operation == 'acc' or operation == 'nop':
+        if operation == "acc" or operation == "nop":
             i += 1
         else:
             i += number
