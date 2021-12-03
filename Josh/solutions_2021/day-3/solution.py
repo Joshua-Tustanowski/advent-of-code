@@ -16,6 +16,13 @@ def parse_file(file_name: str) -> pd.DataFrame:
     return pd.DataFrame(separated)
 
 
+def _bin_to_decimal(binary: str) -> int:
+    value = 0
+    for i, val in enumerate(binary):
+        value += int(val) * (2 ** (len(binary) - i - 1))
+    return value
+
+
 def part_one(file_name: str) -> int:
     df = parse_file(file_name)
     g_vals, e_vals = [], []
@@ -31,11 +38,27 @@ def part_one(file_name: str) -> int:
     return gamma * epsilon
 
 
-def _bin_to_decimal(binary: str) -> int:
-    value = 0
-    for i, val in enumerate(binary):
-        value += int(val) * (2 ** (len(binary) - i - 1))
-    return value
+def part_two(file_name: str) -> int:
+    input_df = parse_file(file_name)
+    size = len(input_df.columns)
+
+    def _generator(df: pd.DataFrame, idx: int, default: str):
+        if len(df) == 1:
+            return df
+        values = df[idx].value_counts()
+        if default == "0":
+            extreme = values[values == values.min()]
+        else:
+            extreme = values[values == values.max()]
+        extreme_value = default if len(extreme) > 1 else extreme.index[0]
+        tmp = df[df[idx] == extreme_value]
+        return _generator(tmp, (idx + 1) % size, default)
+
+    oxygen = _generator(input_df, 0, "1")
+    scrubber = _generator(input_df, 0, "0")
+    sc_val = _bin_to_decimal("".join(scrubber.iloc[-1].tolist()))
+    ox_val = _bin_to_decimal("".join(oxygen.iloc[-1].tolist()))
+    return sc_val * ox_val
 
 
 if __name__ == "__main__":
@@ -43,3 +66,6 @@ if __name__ == "__main__":
 
     result = part_one(file)
     print(f"Part one: {result=}")
+
+    result = part_two(file)
+    print(f"Part two: {result=}")
