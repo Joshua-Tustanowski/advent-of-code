@@ -3,7 +3,7 @@ from enum import Enum
 from os.path import dirname, join
 from typing import List, Tuple
 
-from solutions_2021 import DEBUG
+from solutions_2021 import get_filename
 
 CURRENT_DIR = dirname(__file__)
 
@@ -144,7 +144,7 @@ def part_two(filename: str) -> int:
 
 
 if __name__ == "__main__":
-    file = "basic-input.txt" if not DEBUG else "sample-input.txt"
+    file = get_filename()
 
     result = part_one(file)
     print(f"Part one: {result=}")
