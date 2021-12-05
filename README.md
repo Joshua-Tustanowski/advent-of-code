@@ -1,3 +1,3 @@
-# advent-of-code problem sets for 2020!
+# advent-of-code problem sets
 
-2️⃣0️⃣2️⃣0️⃣
+<!--- advent_readme_stars table --->

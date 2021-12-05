@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from math import ceil, log10
+from math import ceil, log2, log10
 from os.path import dirname, join
 from typing import List, Tuple
 
@@ -20,7 +20,9 @@ def _get_min_max(a, b):
 
 
 def round_to_base10(a: int) -> int:
-    return 10 ** ceil(log10(a))
+    if a == 0:
+        return 0
+    return 2 ** ceil(log2(a))
 
 
 def _infer_width_height(coordinates: List[Tuple[Location, Location]]) -> Tuple[int, int]:
@@ -101,6 +103,7 @@ def parse_input(filename: str) -> List[Tuple[Location, Location]]:
     pattern = re.compile(r"(\d+,\d+)\s->\s(\d+,\d+)")
     for content in contents:
         match = re.match(pattern, content)
+        assert match, f"{pattern} does not work for {content}"
         start = [int(v) for v in match.group(1).split(",")]
         end = [int(v) for v in match.group(2).split(",")]
         locations.append((Location(*start), Location(*end)))
