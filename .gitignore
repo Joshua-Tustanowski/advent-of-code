@@ -1,4 +1,6 @@
 .idea/
 !.gitignore
 .DS_Store
-Josh/.DS_Store
+
+__pycache__/
+*.py[cod]
