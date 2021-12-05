@@ -6,6 +6,7 @@ from math import ceil, log10
 from os.path import dirname, join
 from typing import List, Tuple
 
+import numpy as np
 from solutions_2021 import get_filename
 
 CURRENT_DIR = dirname(__file__)
@@ -86,6 +87,12 @@ class OceanFloor:
                     intersections += 1
         return intersections
 
+    def export(self):
+        values = []
+        for row in self.tiles:
+            values.append([c.counter for c in row])
+        return np.array(values)
+
 
 def parse_input(filename: str) -> List[Tuple[Location, Location]]:
     with open(join(CURRENT_DIR, filename), "r") as fp:
@@ -100,7 +107,7 @@ def parse_input(filename: str) -> List[Tuple[Location, Location]]:
     return locations
 
 
-def solution(filename: str) -> int:
+def solution(filename: str) -> Tuple[OceanFloor, int]:
     locations = parse_input(filename)
     width, height = _infer_width_height(locations)
 
@@ -111,11 +118,11 @@ def solution(filename: str) -> int:
             continue
         for coordinate in line_coordinates:
             floor.update(coordinate)
-    return floor.count_intersections()
+    return floor, floor.count_intersections()
 
 
 if __name__ == "__main__":
     file = get_filename()
 
-    result = solution(file)
+    _, result = solution(file)
     print(f"Solution: {result=}")
