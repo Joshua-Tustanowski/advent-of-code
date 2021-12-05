@@ -1,6 +1,6 @@
+import re
 from dataclasses import dataclass
 from enum import auto, Enum
-import re
 from os.path import dirname, join
 from typing import List, Tuple
 

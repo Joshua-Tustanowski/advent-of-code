@@ -3,7 +3,6 @@ from os.path import dirname, join
 from typing import List, Tuple
 
 import pandas as pd
-
 from solutions_2021 import DEBUG
 
 CURRENT_DIR = dirname(__file__)

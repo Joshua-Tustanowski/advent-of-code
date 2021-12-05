@@ -15,23 +15,11 @@ def process_input_file_to_dicts(file):
 
 
 def validate_key(credentials, key):
-    if (
-        key == "byr"
-        and len(credentials[key]) == 4
-        and 1920 <= int(credentials[key]) <= 2002
-    ):
+    if key == "byr" and len(credentials[key]) == 4 and 1920 <= int(credentials[key]) <= 2002:
         return True
-    if (
-        key == "iyr"
-        and len(credentials[key]) == 4
-        and 2010 <= int(credentials[key]) <= 2020
-    ):
+    if key == "iyr" and len(credentials[key]) == 4 and 2010 <= int(credentials[key]) <= 2020:
         return True
-    if (
-        key == "eyr"
-        and len(credentials[key]) == 4
-        and 2020 <= int(credentials[key]) <= 2030
-    ):
+    if key == "eyr" and len(credentials[key]) == 4 and 2020 <= int(credentials[key]) <= 2030:
         return True
     if key == "hgt":
         num_part = ""
@@ -81,11 +69,7 @@ def check_valid(credentials, expected, optional):
     expected = {key: False for key in expected if key not in optional}
     count = 0
     for key in credentials.keys():
-        if (
-            key in expected
-            and expected[key] == False
-            and validate_key(credentials, key)
-        ):
+        if key in expected and expected[key] == False and validate_key(credentials, key):
             expected[key] = True
             count += 1
     return count == len(expected)

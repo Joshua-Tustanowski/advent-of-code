@@ -1,12 +1,12 @@
-from typing import List, Tuple
 import re
 from collections import Counter
+from typing import List, Tuple
 
-regex_pattern = r'(\d+)-(\d+) (\w): (\w+)'
+regex_pattern = r"(\d+)-(\d+) (\w): (\w+)"
 
 
 def load_input_file(filename: str, lines: bool = True):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.readlines() if lines else inp.read()
 
 
@@ -29,17 +29,17 @@ def part1(inp: List[str]) -> int:
 
 def test_part1():
 
-    assert is_password_valid(*parse_line('1-3 a: abcde'))
-    assert not is_password_valid(*parse_line('1-3 b: cdefg'))
-    assert is_password_valid(*parse_line('2-9 c: ccccccccc'))
+    assert is_password_valid(*parse_line("1-3 a: abcde"))
+    assert not is_password_valid(*parse_line("1-3 b: cdefg"))
+    assert is_password_valid(*parse_line("2-9 c: ccccccccc"))
     # assert part1(inp1) == 514579
 
-    inp = load_input_file('input.txt', lines=True)
+    inp = load_input_file("input.txt", lines=True)
     assert part1(inp) == 410
 
 
 def is_password_valid2(pos1: int, pos2: int, char: str, password: str) -> bool:
-    return sum([password[pos1-1] == char, password[pos2-1] == char]) == 1
+    return sum([password[pos1 - 1] == char, password[pos2 - 1] == char]) == 1
 
 
 def part2(inp: List[str]) -> int:
@@ -51,5 +51,5 @@ def part2(inp: List[str]) -> int:
 
 
 def test_part2():
-    inp = load_input_file('input.txt', lines=True)
+    inp = load_input_file("input.txt", lines=True)
     assert part2(inp) == 694

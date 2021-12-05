@@ -1,5 +1,5 @@
-from typing import List, Tuple
 import copy
+from typing import List, Tuple
 
 
 def print_graph(graph):

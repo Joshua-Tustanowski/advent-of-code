@@ -1,5 +1,5 @@
-from typing import List, Tuple, Dict
 import re
+from typing import Dict, List, Tuple
 
 
 class Graph:
@@ -60,20 +60,20 @@ class Graph:
 
     def populate_graph_with_input(self, inp: List[str]):
         for line in inp:
-            components = line.split(' bags contain ')
+            components = line.split(" bags contain ")
             colour = components[0]
-            if 'no other bags' in line:
+            if "no other bags" in line:
                 self.add_vertex(colour)
             else:
                 children_list = components[1]
-                children = [c.split(' bag')[0] for c in children_list.split(',')]
+                children = [c.split(" bag")[0] for c in children_list.split(",")]
                 for child_str in children:
-                    child_colour_wgt, child_colour = re.search(r'(\d)\s([\w\s]+)', child_str).groups()
+                    child_colour_wgt, child_colour = re.search(r"(\d)\s([\w\s]+)", child_str).groups()
                     self.add_edge(colour, child_colour)
                     self.weights[(colour, child_colour)] = int(child_colour_wgt)
 
     def find_no_of_parents(self, vertex: str):
-        """ Part 1 """
+        """Part 1"""
         colours_encountered = set()
         for v_name, v in self.vertices.items():
             if v_name == vertex:
@@ -86,7 +86,7 @@ class Graph:
         return len(colours_encountered) - 1
 
     def find_number_of_bags_inside(self, colour: str) -> int:
-        """ Part 2 """
+        """Part 2"""
         paths_from_colour = []
         for vertex_name, vertex in self.vertices.items():
             if vertex_name == colour:
@@ -100,7 +100,7 @@ class Graph:
         for path in paths_from_colour:
             product = 1
             for i in range(len(path) - 1):
-                pair = tuple(path[i:i+2])
+                pair = tuple(path[i : i + 2])
                 product *= self.weights[pair]
             no_of_bags += product
         return no_of_bags
@@ -118,19 +118,19 @@ class Vertex:
 def part1(inp: List[str]) -> int:
     graph = Graph()
     graph.populate_graph_with_input(inp)
-    return graph.find_no_of_parents('shiny gold')
+    return graph.find_no_of_parents("shiny gold")
 
 
 def load_input_file(filename: str, lines: bool = True):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.readlines() if lines else inp.read()
 
 
 def test_part1():
-    inp1 = load_input_file('sample.txt')
+    inp1 = load_input_file("sample.txt")
     assert part1(inp1) == 4
 
-    inp = load_input_file('input.txt')
+    inp = load_input_file("input.txt")
     assert part1(inp) == 287
 
 
@@ -141,8 +141,8 @@ def part2(inp: List[str], top_colour: str) -> int:
 
 
 def test_part2():
-    inp1 = load_input_file('sample.txt')
-    assert part2(inp1, 'shiny gold') == 32
+    inp1 = load_input_file("sample.txt")
+    assert part2(inp1, "shiny gold") == 32
 
-    inp = load_input_file('input.txt')
-    assert part2(inp, 'shiny gold') == 48160
+    inp = load_input_file("input.txt")
+    assert part2(inp, "shiny gold") == 48160

@@ -1,5 +1,5 @@
-from typing import List
 from collections import Counter
+from typing import List
 
 
 def play_game(inp: List[int], turns: int) -> int:
@@ -42,7 +42,7 @@ def part1(inp: List[int]) -> int:
 
 
 def load_input_file(filename: str, lines: bool = True):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.readlines() if lines else inp.read()
 
 

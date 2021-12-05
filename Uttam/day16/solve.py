@@ -1,10 +1,10 @@
-from typing import List, Tuple
 import re
 from functools import reduce
+from typing import List, Tuple
 
 
 def parse_input(inp: str):
-    section_blocks = inp.split('\n\n')
+    section_blocks = inp.split("\n\n")
     assert len(section_blocks) == 3
     rules, your_ticket, other_tickets = section_blocks
     return rules, your_ticket, other_tickets
@@ -15,30 +15,30 @@ def part1(inp: List[str]) -> int:
     # Get the rules
     rule_ranges = []
     for rule_line in rules.splitlines():
-        s1, e1, s2, e2 = re.search(r'(\d+)-(\d+) or (\d+)-(\d+)', rule_line).groups()
-        rule_ranges.append(range(int(s1), int(e1)+1))
-        rule_ranges.append(range(int(s2), int(e2)+1))
+        s1, e1, s2, e2 = re.search(r"(\d+)-(\d+) or (\d+)-(\d+)", rule_line).groups()
+        rule_ranges.append(range(int(s1), int(e1) + 1))
+        rule_ranges.append(range(int(s2), int(e2) + 1))
 
     complete_value_range: set = reduce(lambda x, y: set(x) | set(y), rule_ranges)
 
     # Check all other tickets
     problematic_values = []
     for line in other_tickets.splitlines()[1:]:
-        invalid_values = [int(i) for i in line.split(',') if int(i) not in complete_value_range]
+        invalid_values = [int(i) for i in line.split(",") if int(i) not in complete_value_range]
         problematic_values.extend(invalid_values)
     return sum(problematic_values)
 
 
 def load_input_file(filename: str):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.read()
 
 
 def test_part1():
-    inp1 = load_input_file('sample.txt')
+    inp1 = load_input_file("sample.txt")
     assert part1(inp1) == 71
 
-    inp = load_input_file('input.txt')
+    inp = load_input_file("input.txt")
     assert part1(inp) == 23036
 
 
@@ -47,9 +47,9 @@ def part2(inp: List[str]) -> int:
     # Get the rules
     rules = {}
     for rule_line in rule_str.splitlines():
-        field, s1, e1, s2, e2 = re.search(r'(.+): (\d+)-(\d+) or (\d+)-(\d+)', rule_line).groups()
-        r1 = range(int(s1), int(e1)+1)
-        r2 = range(int(s2), int(e2)+1)
+        field, s1, e1, s2, e2 = re.search(r"(.+): (\d+)-(\d+) or (\d+)-(\d+)", rule_line).groups()
+        r1 = range(int(s1), int(e1) + 1)
+        r2 = range(int(s2), int(e2) + 1)
         rules[field] = set(r1) | set(r2)
 
     complete_value_range: set = reduce(lambda x, y: set(x) | set(y), rules.values())
@@ -57,7 +57,7 @@ def part2(inp: List[str]) -> int:
     # Weed out invalid tickets
     valid_lines = []
     for line in other_tickets.splitlines()[1:]:
-        line = [int(i) for i in line.split(',')]
+        line = [int(i) for i in line.split(",")]
         if all(i in complete_value_range for i in line):
             valid_lines.append(line)
 
@@ -97,20 +97,20 @@ def part2(inp: List[str]) -> int:
     field_locations = {}
     for col_n, possible_fields in col_to_field_matches_list:
         possible_fields = [f for f in possible_fields if f not in fields_done]
-        assert len(possible_fields) == 1, f'Possible fields problem: {col_n}, {possible_fields}'
+        assert len(possible_fields) == 1, f"Possible fields problem: {col_n}, {possible_fields}"
         field = possible_fields[0]
         field_locations[col_n] = field
         fields_done.add(field)
 
     # Calculate final answer
-    my_ticket_values = [int(i) for i in my_ticket.splitlines()[1].split(',')]
+    my_ticket_values = [int(i) for i in my_ticket.splitlines()[1].split(",")]
     answer = 1
-    for field, col_n in {v:k for k,v in field_locations.items()}.items():
-        if field.startswith('departure'):
+    for field, col_n in {v: k for k, v in field_locations.items()}.items():
+        if field.startswith("departure"):
             answer *= my_ticket_values[col_n]
     return answer
 
 
 def test_part2():
-    inp = load_input_file('input.txt')
+    inp = load_input_file("input.txt")
     assert part2(inp) == 1909224687553

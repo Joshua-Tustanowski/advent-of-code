@@ -1,5 +1,5 @@
-from typing import List, Tuple
 import re
+from typing import List, Tuple
 
 
 def part1(inp: List[str]) -> int:
@@ -7,12 +7,12 @@ def part1(inp: List[str]) -> int:
 
 
 def load_input_file(filename: str, lines: bool = True):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.readlines() if lines else inp.read()
 
 
 def test_part1():
-    inp1 = load_input_file('sample.txt')
+    inp1 = load_input_file("sample.txt")
     assert part1(inp1) == None
 
     # inp = load_input_file('input.txt')
@@ -24,8 +24,8 @@ def part2(inp: List[str]) -> int:
 
 
 # def test_part2():
-    # inp1 = load_input_file('sample.txt')
-    # assert part2(inp1) == None
+# inp1 = load_input_file('sample.txt')
+# assert part2(inp1) == None
 
-    # inp = load_input_file('input.txt')
-    # assert part2(inp) == None
+# inp = load_input_file('input.txt')
+# assert part2(inp) == None

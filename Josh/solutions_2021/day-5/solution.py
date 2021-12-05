@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import re
-
-from math import ceil, log10
-
 from dataclasses import dataclass
-from typing import List, Tuple
+from math import ceil, log10
 from os.path import dirname, join
+from typing import List, Tuple
 
 from solutions_2021 import get_filename
 
@@ -24,9 +22,7 @@ def round_to_base10(a: int) -> int:
     return 10 ** ceil(log10(a))
 
 
-def _infer_width_height(
-    coordinates: List[Tuple[Location, Location]]
-) -> Tuple[int, int]:
+def _infer_width_height(coordinates: List[Tuple[Location, Location]]) -> Tuple[int, int]:
     width, height = 0, 0
     for start, end in coordinates:
         max_x = max(start.x, end.x)
@@ -58,15 +54,9 @@ class Location:
                 start, end = self, other
 
             if start.y < end.y:
-                return [
-                    Location(x=start.x + i, y=start.y + i)
-                    for i in range((end.x - start.x) + 1)
-                ]
+                return [Location(x=start.x + i, y=start.y + i) for i in range((end.x - start.x) + 1)]
             else:
-                return [
-                    Location(x=start.x + i, y=start.y - i)
-                    for i in range((end.x - start.x) + 1)
-                ]
+                return [Location(x=start.x + i, y=start.y - i) for i in range((end.x - start.x) + 1)]
 
     def __gt__(self, other):
         return self.x > other.x
@@ -114,16 +104,13 @@ def solution(filename: str) -> int:
     locations = parse_input(filename)
     width, height = _infer_width_height(locations)
 
-    floor = OceanFloor(
-        tiles=[[Location(x=x, y=y) for y in range(width)] for x in range(height)]
-    )
+    floor = OceanFloor(tiles=[[Location(x=x, y=y) for y in range(width)] for x in range(height)])
     for start, end in locations:
         line_coordinates = start.get_line_coordinates(end)
         if not line_coordinates:
             continue
         for coordinate in line_coordinates:
             floor.update(coordinate)
-    # floor.print()
     return floor.count_intersections()
 
 

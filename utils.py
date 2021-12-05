@@ -1,6 +1,7 @@
-from datetime import datetime
-import requests
 import json
+from datetime import datetime
+
+import requests
 from bs4 import BeautifulSoup
 
 LEADERBOARD_URL = "https://adventofcode.com/2020/leaderboard/private/view/144312.json"

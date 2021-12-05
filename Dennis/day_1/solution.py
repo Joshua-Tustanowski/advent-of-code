@@ -25,10 +25,10 @@ def solve_two(input):
     return 0
 
 
-if __name__ == '__main__':  # this code is crap check out itertools combinations for pythonic glory
-    file = Path('data.txt')
-    data = [int(x) for x in file.open('r')]
+if __name__ == "__main__":  # this code is crap check out itertools combinations for pythonic glory
+    file = Path("data.txt")
+    data = [int(x) for x in file.open("r")]
     print(solve(data))
-    b = Path('data2.txt')
-    db = [int(x) for x in b.open('r')]
+    b = Path("data2.txt")
+    db = [int(x) for x in b.open("r")]
     print(solve_two(db))

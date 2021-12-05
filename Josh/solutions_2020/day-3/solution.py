@@ -1,5 +1,5 @@
 def get_graph(file):
-    """ convert the input text file into a 2d array """
+    """convert the input text file into a 2d array"""
     count = len(open(file).readlines())
     array = []
     with open(file, "r") as input_file:
@@ -25,15 +25,9 @@ def get_count(file):
 
 
 with open("input.txt", "r") as input_file:
-    input_map = [
-        [field == "#" for field in line] for line in input_file.read().split("\n")
-    ]
+    input_map = [[field == "#" for field in line] for line in input_file.read().split("\n")]
     print(
-        str(
-            [line[(pos * 3) % len(line)] for pos, line in enumerate(input_map)].count(
-                True
-            )
-        )
+        str([line[(pos * 3) % len(line)] for pos, line in enumerate(input_map)].count(True))
         + "\n"
         + str(
             eval(
@@ -43,13 +37,7 @@ with open("input.txt", "r") as input_file:
                         for i in [
                             [
                                 line[(pos * slope[0]) % len(line)]
-                                for pos, line in enumerate(
-                                    [
-                                        n
-                                        for c, n in enumerate(input_map)
-                                        if c % slope[1] == 0
-                                    ]
-                                )
+                                for pos, line in enumerate([n for c, n in enumerate(input_map) if c % slope[1] == 0])
                             ].count(True)
                             for slope in [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
                         ]

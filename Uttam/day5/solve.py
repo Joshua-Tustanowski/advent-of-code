@@ -1,26 +1,26 @@
-from typing import List, Tuple
 import re
-from math import floor, ceil
 from collections import Counter
+from math import ceil, floor
+from typing import List, Tuple
 
 
 def load_input_file(filename: str, lines: bool = True):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.read().splitlines() if lines else inp.read()
 
 
 def binary_space_partitioning(chars: str, low: int, high: int) -> int:
-    print(f'Start ({chars}) ({low}, {high})')
+    print(f"Start ({chars}) ({low}, {high})")
     for char in chars:
         print()
-        if char == 'F':
-            print('Char is F')
+        if char == "F":
+            print("Char is F")
             high = low + floor((high - low) / 2)
         else:
-            print('Char is B')
+            print("Char is B")
             low = low + ceil((high - low) / 2)
-        print(f'{low}, {high}')
-    assert low == high, f'By now low and high should be the same: ({low}, {high})'
+        print(f"{low}, {high}")
+    assert low == high, f"By now low and high should be the same: ({low}, {high})"
     return low
 
 
@@ -30,14 +30,14 @@ def determine_row_number(chars: str) -> int:
     # print(f'Start ({chars}) ({low}, {high})')
     for char in chars:
         # print()
-        if char == 'F':
+        if char == "F":
             # print('Char is F')
             high = low + floor((high - low) / 2)
         else:
             # print('Char is B')
             low = low + ceil((high - low) / 2)
         # print(f'{low}, {high}')
-    assert low == high, f'By now low and high should be the same: ({low}, {high})'
+    assert low == high, f"By now low and high should be the same: ({low}, {high})"
     return low
 
 
@@ -48,12 +48,12 @@ def determine_column_number(chars: str) -> int:
     for char in chars:
         # print()
         # print(f'Char is {char}')
-        if char == 'L':
+        if char == "L":
             high = low + floor((high - low) / 2)
         else:
             low = low + ceil((high - low) / 2)
         # print(f'{low}, {high}')
-    assert low == high, f'By now low and high should be the same: ({low}, {high})'
+    assert low == high, f"By now low and high should be the same: ({low}, {high})"
     return low
 
 
@@ -77,12 +77,12 @@ def part1(boarding_passes: List[str]) -> int:
 
 
 def test_part1():
-    assert parse_seat_location('FBFBBFFRLR') == (44, 5)
-    assert parse_seat_location('BFFFBBFRRR') == (70, 7)
-    assert parse_seat_location('FFFBBBFRRR') == (14, 7)
-    assert parse_seat_location('BBFFBBFRLL') == (102, 4)
+    assert parse_seat_location("FBFBBFFRLR") == (44, 5)
+    assert parse_seat_location("BFFFBBFRRR") == (70, 7)
+    assert parse_seat_location("FFFBBBFRRR") == (14, 7)
+    assert parse_seat_location("BBFFBBFRLL") == (102, 4)
 
-    inp1 = load_input_file('input.txt')
+    inp1 = load_input_file("input.txt")
     assert part1(inp1) == 933
 
 
@@ -94,16 +94,16 @@ def part2(boarding_passes: List[str]) -> int:
 
     # Display map
     for row_n, row in enumerate(seat_map):
-        print('{:3} {}'.format(row_n, row))
+        print("{:3} {}".format(row_n, row))
 
     rows_with_only_one_missing_seat = [(row_n, row) for row_n, row in enumerate(seat_map) if Counter(row)[0] == 1]
-    print('\nRows with only 1 missing seat:')
-    assert len(rows_with_only_one_missing_seat) == 1, f'Multiple rows found with only 1 missing seat'
+    print("\nRows with only 1 missing seat:")
+    assert len(rows_with_only_one_missing_seat) == 1, f"Multiple rows found with only 1 missing seat"
     [row_n, row] = rows_with_only_one_missing_seat[0]
     col = row.index(0)
     return calculate_seat_id(row_n, col)
 
 
 def test_part2():
-    inp1 = load_input_file('input.txt')
+    inp1 = load_input_file("input.txt")
     assert part2(inp1) == 711

@@ -1,5 +1,5 @@
-from typing import List, Tuple, Callable
 import re
+from typing import Callable, List, Tuple
 
 
 class GameBoy:
@@ -25,23 +25,23 @@ class GameBoy:
             func, arg = self.parse_line(line)
             # print(f'[{self.pointer}] Running {func} with arg {arg}')
             func(arg)
-        print('Program ran successfully. Accumulator: {}'.format(self.accumulator))
+        print("Program ran successfully. Accumulator: {}".format(self.accumulator))
         return True, self.accumulator
 
     def parse_line(self, line: str) -> Tuple[Callable, int]:
         func = None
-        if 'acc' in line:
+        if "acc" in line:
             func = self.acc
-        elif 'jmp' in line:
+        elif "jmp" in line:
             if self.jmp_to_change == self.jmp_counter:
-                print('Changing jmp #{} to nop'.format(self.jmp_to_change))
+                print("Changing jmp #{} to nop".format(self.jmp_to_change))
                 func = self.nop
             else:
                 func = self.jmp
             self.jmp_counter += 1
-        elif 'nop' in line:
+        elif "nop" in line:
             func = self.nop
-        assert func is not None, f'No func for {line}'
+        assert func is not None, f"No func for {line}"
         arg = int(line[4:])
         return func, arg
 
@@ -73,21 +73,21 @@ def part2(inp: List[str]) -> int:
 
 
 def load_input_file(filename: str, lines: bool = True):
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.read().splitlines() if lines else inp.read()
 
 
 def test_part1():
-    inp1 = load_input_file('sample.txt')
+    inp1 = load_input_file("sample.txt")
     assert part1(inp1) == 5
 
-    inp = load_input_file('input.txt')
+    inp = load_input_file("input.txt")
     assert part1(inp) == 1586
 
 
 def test_part2():
-    inp1 = load_input_file('sample.txt')
+    inp1 = load_input_file("sample.txt")
     assert part2(inp1) == 8
 
-    inp = load_input_file('input.txt')
+    inp = load_input_file("input.txt")
     assert part2(inp) == 703

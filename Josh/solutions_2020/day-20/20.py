@@ -12,9 +12,7 @@ if __name__ == "__main__":
         all_ingredients = all_ingredients.union(ingredients)
         for allergen in allergies.split(", "):
             if allergen in possible_allergies:
-                possible_allergies[allergen] = possible_allergies[
-                    allergen
-                ].intersection(ingredients)
+                possible_allergies[allergen] = possible_allergies[allergen].intersection(ingredients)
             else:
                 possible_allergies[allergen] = ingredients
     allergens = {}
@@ -31,8 +29,6 @@ if __name__ == "__main__":
 
     with open("input.txt") as fp:
         text = fp.read()
-        safe_count = sum(
-            len(re.findall(rf"\b{ingredient}\b", text)) for ingredient in safe
-        )
+        safe_count = sum(len(re.findall(rf"\b{ingredient}\b", text)) for ingredient in safe)
         print(safe_count)
         print(f"Part 2: {','.join(allergens[k] for k in sorted(allergens))}")

@@ -2,7 +2,7 @@ from typing import List
 
 
 def load_input_file(filename: str, lines: bool = True) -> str:
-    with open(filename, 'r') as inp:
+    with open(filename, "r") as inp:
         return inp.readlines() if lines else inp.read()
 
 
@@ -23,7 +23,7 @@ def test_part1():
 1456""".splitlines()
     assert part1(inp1) == 514579
 
-    inp = load_input_file('input.txt', lines=True)
+    inp = load_input_file("input.txt", lines=True)
     assert part1(inp) == 964875
 
 
@@ -45,5 +45,5 @@ def test_part2():
 1456""".splitlines()
     assert part2(inp1) == 241861950
 
-    inp = load_input_file('input.txt', lines=True)
+    inp = load_input_file("input.txt", lines=True)
     assert part2(inp) == 158661360

@@ -1,6 +1,6 @@
-from typing import List, Tuple
 import re
 import string
+from typing import List, Tuple
 
 
 def load_input_file(filename: str, blocks: bool = True):

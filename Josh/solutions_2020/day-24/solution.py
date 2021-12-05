@@ -47,13 +47,7 @@ if __name__ == "__main__":
 
         new_tiles = {}
         for coord, is_flipped in black.items():
-            flip_count = len(
-                [
-                    neighbour
-                    for neighbour in get_neighbours(coord)
-                    if black.get(neighbour, False)
-                ]
-            )
+            flip_count = len([neighbour for neighbour in get_neighbours(coord) if black.get(neighbour, False)])
             if is_flipped and (flip_count == 0 or flip_count > 2):
                 is_flipped = False
             elif not is_flipped and flip_count == 2:

@@ -1,4 +1,4 @@
-from os.path import join, dirname
+from os.path import dirname, join
 from typing import List
 
 from solutions_2021 import DEBUG
@@ -28,12 +28,7 @@ def _get_increasing_count(values: List[int]) -> int:
 
 def part_two(file_name: str, window_size: int = 3) -> int:
     values = parse_file(file_name)
-    return _get_increasing_count(
-        [
-            sum(values[i : i + window_size])
-            for i in range((len(values) - window_size + 1))
-        ]
-    )
+    return _get_increasing_count([sum(values[i : i + window_size]) for i in range((len(values) - window_size + 1))])
 
 
 if __name__ == "__main__":

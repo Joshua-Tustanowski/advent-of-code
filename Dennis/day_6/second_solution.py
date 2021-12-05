@@ -1,11 +1,11 @@
 from pathlib import Path
 
-with Path('input/6b.txt').open('r') as file:
+with Path("input/6b.txt").open("r") as file:
     content = file.read()
 
-data = content.split('\n\n')
+data = content.split("\n\n")
 
-data_2 = [collection.split('\n') for collection in data]
+data_2 = [collection.split("\n") for collection in data]
 
 print(data)
 
