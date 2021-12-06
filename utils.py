@@ -7,6 +7,9 @@ from bs4 import BeautifulSoup
 LEADERBOARD_URL = "https://adventofcode.com/2020/leaderboard/private/view/144312.json"
 
 
+# curl -b 'session=<session-id>' https://adventofcode.com/2021/leaderboard/private/view/1754303.json
+
+
 def convert_unix_to_datetime(unix_time: int) -> str:
     now_dt = datetime.utcfromtimestamp(unix_time)
     pretty_date = now_dt.strftime("%c")
@@ -52,10 +55,3 @@ def memoize(func):
         return cache[args]
 
     return wrapper
-
-
-@memoize
-def fibonacci(n):
-    if 0 < n <= 2:
-        return n
-    return fibonacci(n - 1) + fibonacci(n - 2)
