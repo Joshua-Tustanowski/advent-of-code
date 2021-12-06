@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from math import ceil, log2, log10
+from math import ceil, log2
 from os.path import dirname, join
 from typing import List, Tuple
 
@@ -15,7 +15,7 @@ WIDTH = 10
 HEIGHT = 10
 
 
-def _get_min_max(a, b):
+def _get_min_max(a: int, b: int) -> Tuple[int, int]:
     return max(a, b), min(a, b)
 
 
@@ -61,10 +61,10 @@ class Location:
             else:
                 return [Location(x=start.x + i, y=start.y - i) for i in range((end.x - start.x) + 1)]
 
-    def __gt__(self, other):
+    def __gt__(self, other: Location) -> bool:
         return self.x > other.x
 
-    def __str__(self):
+    def __str__(self) -> str:
         symbol = "." if self.counter == 0 else self.counter
         return f"{symbol}"
 
@@ -76,12 +76,12 @@ class OceanFloor:
     def update(self, loc: Location) -> None:
         self.tiles[loc.x][loc.y].counter += 1
 
-    def print(self):
+    def print(self) -> None:
         for row in self.tiles:
-            row = " ".join([str(col) for col in row])
+            row = " ".join([str(col) for col in row])  # type: ignore
             print(row)
 
-    def count_intersections(self):
+    def count_intersections(self) -> int:
         intersections = 0
         for row in self.tiles:
             for col in row:
@@ -89,7 +89,7 @@ class OceanFloor:
                     intersections += 1
         return intersections
 
-    def export(self):
+    def export(self) -> np.array:
         values = []
         for row in self.tiles:
             values.append([c.counter for c in row])

@@ -21,3 +21,18 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: "./run-mypy.sh"
+        language: python
+        language_version: python3.10
+        additional_dependencies: [ "mypy==0.910" ]
+        types: [python]
+        pass_filenames: false
+        # use require_serial so that script
+        # is only called once per commit
+        require_serial: true
+        # Print the number of files as sanity-check
+        verbose: true

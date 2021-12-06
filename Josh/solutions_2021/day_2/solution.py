@@ -2,9 +2,9 @@ import re
 from dataclasses import dataclass
 from enum import auto, Enum
 from os.path import dirname, join
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
-from solutions_2021 import DEBUG
+from solutions_2021 import get_filename
 
 CURRENT_DIR = dirname(__file__)
 
@@ -20,7 +20,7 @@ class Location:
     x: int = 0
     y: int = 0
 
-    def move(self, direction: Direction, distance: int):
+    def move(self, direction: Direction, distance: int) -> None:
         if direction == Direction.FORWARD:
             self.x += distance
         elif direction == Direction.DOWN:
@@ -35,7 +35,7 @@ class Location:
 class LocationAim(Location):
     aim: int = 0
 
-    def move(self, direction: Direction, distance: int):
+    def move(self, direction: Direction, distance: int) -> None:
         if direction == Direction.FORWARD:
             self.x += distance
             self.y += self.aim * distance
@@ -56,16 +56,15 @@ mapping = {
 pattern = re.compile(r"([a-z]+)\s(\d+)")
 
 
-def parse_file(file_name: str) -> List[Tuple[Direction, int]]:
+def parse_file(file_name: str) -> List[Tuple[Direction, int]]:  # type: ignore
     with open(join(CURRENT_DIR, file_name), "r") as fp:
         contents = fp.read().split("\n")
     instructions = []
     for instruction in contents:
         matched = pattern.match(instruction)
-        direction = mapping.get(matched.group(1))
-        assert direction, f"no direction for instruction {instruction}"
-        instructions.append((direction, int(matched.group(2))))
-    return instructions
+        direction = mapping.get(matched.group(1))  # type: ignore
+        instructions.append((direction, int(matched.group(2))))  # type: ignore
+    return instructions  # type: ignore
 
 
 def part_one(file_name: str) -> int:
@@ -87,7 +86,7 @@ def part_two(file_name: str) -> int:
 
 
 if __name__ == "__main__":
-    file = "basic-input.txt" if not DEBUG else "sample-input.txt"
+    file = get_filename()
 
     result = part_one(file)
     print(f"Part one: {result=}")

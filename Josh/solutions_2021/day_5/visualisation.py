@@ -6,11 +6,11 @@ from solutions_2021.day_5.solution import solution
 sns.set()
 
 
-def plot_results():
-    file = "reddit-input.txt"
+def plot_results() -> None:
+    file = get_filename()
     ocean_floor, _ = solution(file)
     plt.figure(figsize=(10, 10))
-    ax = sns.heatmap(ocean_floor.export(), cbar=None, xticklabels=False, yticklabels=False)
+    sns.heatmap(ocean_floor.export(), cbar=None, xticklabels=False, yticklabels=False)
     plt.savefig("reddit.png", bbox_inches="tight", dpi=1000)
 
 

@@ -41,7 +41,7 @@ def part_two(file_name: str) -> int:
     input_df = parse_file(file_name)
     size = len(input_df.columns)
 
-    def _generator(df: pd.DataFrame, idx: int, default: str):
+    def _generator(df: pd.DataFrame, idx: int, default: str) -> pd.DataFrame:
         if len(df) == 1:
             return df
         values = df[idx].value_counts()

@@ -19,7 +19,7 @@ class TerminalColours(str, Enum):
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
 
@@ -28,7 +28,7 @@ class Cell:
     value: int
     seen: bool = False
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.seen:
             return f"{TerminalColours.OKGREEN}{self.value}{TerminalColours.ENDC}"
         return f"{self.value}"
@@ -41,8 +41,8 @@ class Grid:
     height: int = 5
     has_bingo: bool = False
 
-    def print(self):
-        output = [" ".join([str(col) for col in row]) for row in self.cells]
+    def print(self) -> None:
+        output = [" ".join([str(col) for col in row]) for row in self.cells]  # type: ignore
         print("\n".join(output))
 
     def mark(self, value: int) -> None:
@@ -53,7 +53,7 @@ class Grid:
                     cell.seen = True
 
     def is_bingo(self) -> bool:
-        def _is_bingo_x(cells: List[List[Cell]], x: int, y: int):
+        def _is_bingo_x(cells: List[List[Cell]], x: int, y: int) -> bool:
             if x >= self.height:
                 return True
 
@@ -62,7 +62,7 @@ class Grid:
 
             return is_seen and _is_bingo_x(cells, x + 1, y)
 
-        def _is_bingo_y(cells: List[List[Cell]], x: int, y: int):
+        def _is_bingo_y(cells: List[List[Cell]], x: int, y: int) -> bool:
             if y >= self.height:
                 return True
 
@@ -112,7 +112,7 @@ def parse_input(filename: str) -> Tuple[List[int], List[Grid]]:
 def part_one(filename: str) -> int:
     orders, grids = parse_input(filename)
     is_bingo = False
-    last_order, last_grid = None, None
+    last_order, last_grid = orders[0], grids[0]
 
     for order in orders:
         for grid in grids:
@@ -123,13 +123,12 @@ def part_one(filename: str) -> int:
         if is_bingo:
             last_order = order
             break
-
     return sum(last_grid.unmarked()) * last_order
 
 
 def part_two(filename: str) -> int:
     orders, grids = parse_input(filename)
-    last_order, losing_grid = None, None
+    last_order, losing_grid = orders[0], grids[0]
 
     for order in orders:
         for grid in grids:
@@ -138,9 +137,9 @@ def part_two(filename: str) -> int:
             grid.mark(order)
             if grid.is_bingo():
                 grid.has_bingo = True
-                last_order, last_grid = order, grid
+                last_order, losing_grid = order, grid
 
-    return sum(last_grid.unmarked()) * last_order
+    return sum(losing_grid.unmarked()) * last_order
 
 
 if __name__ == "__main__":
