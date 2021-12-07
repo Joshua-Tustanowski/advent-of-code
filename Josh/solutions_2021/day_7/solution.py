@@ -37,10 +37,13 @@ def part_two(file_name: str) -> Tuple[int, int]:
     initial_positions = parse_input(file_name)
     fuel_usages = {}
     min_pos, max_pos = min(initial_positions), max(initial_positions)
+    values = list(range(1, max_pos + 1))
+
     for value in range(min_pos, max_pos + 1):
         fuel_usage = 0
         for pos in initial_positions:
-            fuel_usage += sum(range(abs(pos - value) + 1))
+            val = abs(pos - value)
+            fuel_usage += sum(values[:val])
         fuel_usages[value] = fuel_usage
     return get_minimum_entry(fuel_usages)
 
