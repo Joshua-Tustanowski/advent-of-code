@@ -1,3 +1,4 @@
+from math import ceil, floor
 from os.path import dirname, join
 from typing import Any, Dict, List, Tuple
 
@@ -48,11 +49,21 @@ def part_two(file_name: str) -> Tuple[int, int]:
     return get_minimum_entry(fuel_usages)
 
 
+def maths(file_name: str) -> int:
+    """ See submarine.pdf for a writeup from Reddit u/throwaway7824365346 on why the mean works """
+    c = parse_input(file_name)
+    t = lambda x: x * (x + 1) / 2
+    mean = float(sum(c)) / len(c)
+    return min([sum([t(abs(v - i)) for v in c]) for i in [int(floor(mean)), int(ceil(mean))]])  # type: ignore
+
+
 if __name__ == "__main__":
     file = get_filename()
 
-    result = part_one(file)
+    _, result = part_one(file)
     print(f"Part one: {result=}")
 
-    result = part_two(file)
+    _, result = part_two(file)
     print(f"Part two: {result=}")
+
+    assert result == maths(file)
