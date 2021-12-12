@@ -62,20 +62,22 @@ def _find_missing_ending(line: List[str]) -> str:
 def _competition_scoring(line: str) -> int:
     count = 0
     for char in line:
-        count = count * 5 + COMPETITON_SCORING.get(char)
+        score = COMPETITON_SCORING.get(char)
+        assert score, f"Invalid score {char}"
+        count = count * 5 + score
     return count
 
 
 def part_one(lines: List[List[str]]) -> int:
     corrupt_chars = [_is_corrupt(line) for line in lines]
-    return sum(MAPPING_SCORE.get(val) for val in corrupt_chars)
+    return sum(MAPPING_SCORE.get(val) for val in corrupt_chars)  # type: ignore
 
 
 def part_two(lines: List[List[str]]) -> int:
     valid_lines = [line for line in lines if not _is_corrupt(line)]
     projected_endings = [_find_missing_ending(line) for line in valid_lines]
     scores = sorted([_competition_scoring(line) for line in projected_endings])
-    return scores[len(scores)//2]
+    return scores[len(scores) // 2]
 
 
 if __name__ == "__main__":
