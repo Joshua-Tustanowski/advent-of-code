@@ -1,26 +1,10 @@
 from dataclasses import dataclass
-from enum import Enum
 from os.path import dirname, join
 from typing import List, Tuple
 
-from solutions_2021 import get_filename
+from solutions_2021 import get_filename, TerminalColours
 
 CURRENT_DIR = dirname(__file__)
-
-
-class TerminalColours(str, Enum):
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKCYAN = "\033[96m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
-
-    def __str__(self) -> str:
-        return self.value
 
 
 @dataclass
