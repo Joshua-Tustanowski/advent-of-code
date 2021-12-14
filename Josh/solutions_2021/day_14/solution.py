@@ -1,9 +1,8 @@
 import copy
-from collections import defaultdict
+from collections import Counter, defaultdict
 from math import ceil
 from os.path import dirname, join
 from typing import Dict, Tuple
-from collections import Counter
 
 from solutions_2021 import get_filename
 
@@ -12,10 +11,10 @@ CURRENT_DIR = dirname(__file__)
 
 def parse_input(file_name: str) -> Tuple[str, Dict[str, str]]:
     with open(join(CURRENT_DIR, file_name), "r") as fp:
-        template, mappings = fp.read().split('\n\n')
+        template, mappings = fp.read().split("\n\n")
     rules = {}
-    for mapping in mappings.split('\n'):
-        start, end = mapping.split(' -> ')
+    for mapping in mappings.split("\n"):
+        start, end = mapping.split(" -> ")
         rules[start] = end
     return template, rules
 
@@ -37,7 +36,7 @@ def _get_counter(template: str, rules: Dict[str, str], steps: int = 10) -> Dict[
     for i in range(1, steps + 1):
         # start = time.time()
         values = [f"{curr[i]}{rules[curr[i:i+2]]}" for i in range(len(curr) - 1)]
-        curr = "".join([*values, curr[len(curr)-1]])
+        curr = "".join([*values, curr[len(curr) - 1]])
         # print(f"Step {i} took: {time.time() - start}")
         # print(f"After step {i}: {curr}")
     return Counter(curr)
@@ -46,7 +45,7 @@ def _get_counter(template: str, rules: Dict[str, str], steps: int = 10) -> Dict[
 def part_two(template: str, rules: Dict[str, str], steps: int = 5):
     pairs = defaultdict(int)
     for i in range(len(template) - 1):
-        pairs[template[i:i+2]] += 1
+        pairs[template[i : i + 2]] += 1
 
     for step in range(0, steps):
         inserts = copy.deepcopy(pairs)

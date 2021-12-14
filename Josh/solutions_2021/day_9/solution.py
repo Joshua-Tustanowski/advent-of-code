@@ -57,8 +57,8 @@ def get_neighbours(grid: List[List[int]], x: int, y: int) -> List[int]:
     neighbours = []
     for direction in DIRECTIONS:
         xo, yo = direction
-        if (0 <= x+xo < len(grid)) and (0 <= y+yo < len(grid[x])):
-            neighbours.append(grid[x+xo][y+yo])
+        if (0 <= x + xo < len(grid)) and (0 <= y + yo < len(grid[x])):
+            neighbours.append(grid[x + xo][y + yo])
     return neighbours
 
 

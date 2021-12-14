@@ -50,7 +50,7 @@ def part_two(file_name: str) -> Tuple[int, int]:
 
 
 def maths(file_name: str) -> int:
-    """ See submarine.pdf for a writeup from Reddit u/throwaway7824365346 on why the mean works """
+    """See submarine.pdf for a writeup from Reddit u/throwaway7824365346 on why the mean works"""
     c = parse_input(file_name)
     t = lambda x: x * (x + 1) / 2
     mean = float(sum(c)) / len(c)
