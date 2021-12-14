@@ -11,7 +11,7 @@ CURRENT_DIR = dirname(__file__)
 
 @dataclass
 class Instruction:
-    direction: str = 'x'
+    direction: str = "x"
     axis: int = -1
 
 
