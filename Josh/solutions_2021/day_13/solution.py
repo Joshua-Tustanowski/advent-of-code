@@ -38,10 +38,12 @@ class Grid:
             self.cells[cell.y][cell.x] = cell
 
     def marked_cells(self):
-        return [[self.cells[x][y].marked for y in range(len(self.cells[x]))] for x in range(len(self.cells))]
+        return [
+            [self.cells[x][y].marked for y in range(len(self.cells[x]))] for x in range(len(self.cells))
+        ]
 
     def fold(self, instruction: Instruction):
-        if instruction.direction == "y":
+        if instruction.direction == 'y':
             for x in range(len(self.cells)):
                 for y in range(len(self.cells[x])):
                     if x >= instruction.axis and self.cells[x][y].marked:
@@ -50,12 +52,11 @@ class Grid:
                         self.cells[x_pos][y].marked = True
             cells = [
                 [self.cells[x][y] for y in range(len(self.cells[0]))]
-                for x in range(len(self.cells))
-                if x < instruction.axis
+                for x in range(len(self.cells)) if x < instruction.axis
             ]
             self.cells = cells
             # get all cells below the vertical line
-        elif instruction.direction == "x":
+        elif instruction.direction == 'x':
             for x in range(len(self.cells)):
                 for y in range(len(self.cells[x])):
                     if y >= instruction.axis and self.cells[x][y].marked:
@@ -63,7 +64,10 @@ class Grid:
                         y_pos = instruction.axis - new_y
                         self.cells[x][y_pos].marked = True
             cells = [
-                [self.cells[x][y] for y in range(len(self.cells[0])) if y < instruction.axis]
+                [
+                    self.cells[x][y] for y in range(len(self.cells[0]))
+                    if y < instruction.axis
+                ]
                 for x in range(len(self.cells))
             ]
             self.cells = cells
@@ -77,13 +81,13 @@ def parse_input(file_name: str) -> Tuple[Grid, List[Instruction]]:
     with open(join(CURRENT_DIR, file_name), "r") as fp:
         positions, axes = fp.read().split("\n\n")
     cells = []
-    for position in positions.split("\n"):
+    for position in positions.split('\n'):
         start, end = position.split(",")
         cells.append(Cell(marked=True, x=int(start), y=int(end)))
     grid = Grid(cells=cells)
     instr = []
     pattern = re.compile(r"fold along ([x-y])=(\d+)")
-    for instruction in axes.split("\n"):
+    for instruction in axes.split('\n'):
         matched = re.match(pattern, instruction)
         instr.append(Instruction(direction=matched.group(1), axis=int(matched.group(2))))
     return grid, instr
